@@ -1,6 +1,6 @@
 # Automata - The Internet of Intelligent Agents
 
-![Status](https://img.shields.io/badge/status-production--ready-brightgreen)
+![Status](https://img.shields.io/badge/status-development--ready-brightgreen)
 ![Security](https://img.shields.io/badge/security-JWT-blue)
 ![TypeScript](https://img.shields.io/badge/typescript-5.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
