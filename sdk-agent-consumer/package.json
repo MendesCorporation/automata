@@ -1,0 +1,40 @@
+{
+  "name": "@apptrix/automata-agent-consumer",
+  "version": "1.0.1",
+  "description": "SDK for creating service consumer agents",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch example.ts",
+    "example": "tsx example.ts",
+    "ai-search": "tsx ai-search-agent.ts",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "agent",
+    "consumer",
+    "sdk",
+    "automata"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
+    "dotenv": "^16.4.5",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

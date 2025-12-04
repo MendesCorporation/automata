@@ -1,0 +1,35 @@
+# Node / TypeScript (monorepo)
+/node_modules/
+/registry-central/node_modules/
+/sdk-agent-consumer/node_modules/
+/sdk-agent-provider/node_modules/
+
+/registry-central/dist/
+/sdk-agent-consumer/dist/
+/sdk-agent-provider/dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Env / secrets
+/.env
+/registry-central/.env
+/sdk-agent-consumer/.env
+/sdk-agent-provider/.env
+
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Build artifacts (if generated elsewhere)
+coverage/
+*.tgz
+
+# IDE / tooling
+.vscode/
+.idea/
+.claude

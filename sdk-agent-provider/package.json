@@ -1,0 +1,41 @@
+{
+  "name": "@apptrix/automata-agent-provider",
+  "version": "1.0.1",
+  "description": "SDK for creating service provider agents",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch example.ts",
+    "example": "tsx example.ts",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "agent",
+    "provider",
+    "sdk",
+    "automata"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
+    "fastify": "^5.1.0",
+    "@fastify/rate-limit": "^10.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}

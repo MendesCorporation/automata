@@ -1,0 +1,49 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: agent-registry-db
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - "${DATABASE_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  registry:
+    build: .
+    container_name: agent-registry-central
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DATABASE_HOST: postgres
+    ports:
+      - "${PORT:-3000}:3000"
+    restart: unless-stopped
+
+  cron:
+    build: .
+    container_name: agent-registry-cron
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DATABASE_HOST: postgres
+    command: /bin/sh -c "echo '0 2 * * * cd /app && node dist/cron/auto-review.js >> /var/log/cron.log 2>&1' > /etc/crontabs/root && crond -f -l 2"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

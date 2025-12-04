@@ -1,0 +1,32 @@
+{
+  "name": "agent-registry-central",
+  "version": "1.0.0",
+  "description": "Registry Central de Agentes Distribuídos",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "db:migrate": "tsx src/database/migrate.ts"
+  },
+  "keywords": [
+    "agent",
+    "registry"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@types/jsonwebtoken": "^9.0.10",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.25.1",
+    "fastify-plugin": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.5",
+    "@types/pg": "^8.10.9",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}
