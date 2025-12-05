@@ -12,6 +12,24 @@
 
 ---
 
+## 📖 Table of Contents
+
+- [The Vision: An Internet of Agents](#-the-vision-an-internet-of-agents)
+- [What is Automata?](#-what-is-automata)
+- [The Problem We Solve](#-the-problem-we-solve)
+- [Quick Start (5 Minutes)](#-quick-start-5-minutes)
+- [More Examples](#-more-examples)
+- [Architecture](#️-architecture)
+- [Key Features](#-key-features)
+- [SDKs](#-sdks)
+- [Complete Documentation](#-complete-documentation)
+- [Use Cases](#-use-cases)
+- [Best Practices](#-best-practices)
+- [Deployment](#-deployment)
+- [Security](#-security)
+
+---
+
 ## 🌐 The Vision: An Internet of Agents
 
 Imagine a world where AI agents can **discover and connect to services automatically** - just like humans use Google to find websites, but for intelligent agents finding specialized services.
@@ -139,9 +157,24 @@ Automata is a registry system for building agent ecosystems. Think "DNS for AI a
 
 ## 🚀 Quick Start (5 Minutes)
 
+### Prerequisites
+
+```bash
+# Install dependencies
+npm install @apptrix/automata-agent-provider @apptrix/automata-agent-consumer typescript tsx @types/node dotenv
+```
+
+Create a `.env` file:
+```bash
+NODE_ENV=development
+JWT_SECRET=your-secret-key-minimum-32-characters-long
+LLM_API_KEY=your-openai-api-key  # For consumer
+```
+
 ### 1. Create a Provider Agent
 
 ```typescript
+import 'dotenv/config';
 import { AgentProvider } from '@apptrix/automata-agent-provider';
 
 const agent = new AgentProvider({
@@ -161,10 +194,15 @@ const agent = new AgentProvider({
 // Define what the agent does
 agent.onExecute(async (request) => {
   if (request.task === 'get_weather') {
-    const weather = await fetchWeather(request.params.city);
+    // Mock weather data for demonstration
+    const city = request.params?.city || 'Unknown';
     return {
       success: true,
-      data: { temperature: weather.temp, condition: weather.condition }
+      data: {
+        city,
+        temperature: 28,
+        condition: 'sunny'
+      }
     };
   }
 
@@ -178,6 +216,7 @@ await agent.start();
 ### 2. Create a Consumer Agent
 
 ```typescript
+import 'dotenv/config';
 import { AgentConsumer } from '@apptrix/automata-agent-consumer';
 
 const consumer = new AgentConsumer({
@@ -217,6 +256,67 @@ console.log(result.data); // { temperature: 28, condition: 'sunny' }
   <img src="public/images/demo.gif" alt="Terminal demo quoting apple price across 3 supermarkets" width="700">
   <p><em>Terminal demo: quoting apple prices from 3 supermarkets via the consumer SDK</em></p>
 </div>
+
+---
+
+## 📋 More Examples
+
+### Interactive AI Search (Consumer)
+
+Try the interactive CLI that demonstrates natural language agent orchestration:
+
+```bash
+cd sdk-agent-consumer
+npm install
+npx tsx ai-search-agent.ts
+```
+
+**Features:**
+- Natural language input: "Find hotels in Miami Beach"
+- Automatic intent extraction with LLM
+- Multi-agent orchestration
+- Conversation memory
+- Rating and feedback
+
+**[See full code →](sdk-agent-consumer/ai-search-agent.ts)**
+
+### Provider Examples
+
+**Supermarket Agents (Price Quotes & Delivery):**
+```bash
+cd sdk-agent-provider
+
+# Start Carrefour Express (São Paulo)
+npx tsx supermarket-carrefour.ts
+
+# Start Atacadão (São Paulo)
+npx tsx supermarket-atacadao.ts
+
+# Start Zona Sul (Rio de Janeiro)
+npx tsx supermarket-zona-sul.ts
+```
+
+**Hotel Agents (Booking & Availability):**
+```bash
+cd sdk-agent-provider
+
+# Start Miami Beach Hotel
+npx tsx hotel-miami.ts
+
+# Start São Paulo Hotel
+npx tsx hotel-sao-paulo.ts
+
+# Start Orlando Hotel
+npx tsx hotel-orlando.ts
+```
+
+**Each example demonstrates:**
+- Complete provider setup
+- Intent definitions
+- Input schema validation
+- Task handlers
+- Mock data responses
+- LLM integration (hotels)
 
 ---
 
@@ -359,6 +459,14 @@ npm install @apptrix/automata-agent-provider
 
 **[Full Documentation →](sdk-agent-provider/README.md)**
 
+**Example Providers:**
+- [supermarket-carrefour.ts](sdk-agent-provider/supermarket-carrefour.ts) - Supermarket with delivery (São Paulo)
+- [supermarket-atacadao.ts](sdk-agent-provider/supermarket-atacadao.ts) - Wholesale supermarket (São Paulo)
+- [supermarket-zona-sul.ts](sdk-agent-provider/supermarket-zona-sul.ts) - Premium supermarket (Rio de Janeiro)
+- [hotel-miami.ts](sdk-agent-provider/hotel-miami.ts) - Hotel booking agent (Miami Beach)
+- [hotel-sao-paulo.ts](sdk-agent-provider/hotel-sao-paulo.ts) - Hotel booking agent (São Paulo)
+- [hotel-orlando.ts](sdk-agent-provider/hotel-orlando.ts) - Hotel booking agent (Orlando)
+
 ### Agent Consumer SDK
 
 **Discover and consume agent services.**
@@ -376,6 +484,9 @@ npm install @apptrix/automata-agent-consumer
 - Multi-language support
 
 **[Full Documentation →](sdk-agent-consumer/README.md)**
+
+**Interactive Example:**
+- [ai-search-agent.ts](sdk-agent-consumer/ai-search-agent.ts) - Interactive CLI for natural language agent search and orchestration
 
 ---
 
@@ -488,6 +599,8 @@ console.log(interpretation);
 //  1. Ocean View Resort - $250/night, beachfront..."
 ```
 
+**💡 Try it yourself:** See [ai-search-agent.ts](sdk-agent-consumer/ai-search-agent.ts) for a complete interactive implementation!
+
 ---
 
 ## 🌍 Environment Variables
@@ -495,15 +608,15 @@ console.log(interpretation);
 ### Provider
 ```bash
 PORT=4001
-REGISTRY_URL=https://automata.apptrixcloud.com
+REGISTRY_URL=https://automata-dev.apptrixcloud.com
 PUBLIC_ENDPOINT=https://your-agent.com  # Required in production
 ```
 
 ### Consumer
 ```bash
-REGISTRY_URL=https://automata.apptrixcloud.com
+REGISTRY_URL=https://automata-dev.apptrixcloud.com
 
-# LLM Configuration (REQUIRED in v2.0)
+# LLM Configuration 
 LLM_PROVIDER=openai
 LLM_MODEL=gpt-4o-mini
 LLM_API_KEY=sk-...
@@ -511,7 +624,7 @@ LLM_API_KEY=sk-...
 
 ### Registry Central
 ```bash
-NODE_ENV=production
+NODE_ENV=development
 DATABASE_HOST=postgres
 DATABASE_PORT=5432
 DATABASE_NAME=automata

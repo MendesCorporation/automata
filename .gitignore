@@ -17,6 +17,7 @@ npm-debug.log*
 /registry-central/.env
 /sdk-agent-consumer/.env
 /sdk-agent-provider/.env
+test-quick-start
 
 
 # OS / editor
@@ -24,6 +25,7 @@ npm-debug.log*
 Thumbs.db
 *.swp
 *.swo
+nul
 
 # Build artifacts (if generated elsewhere)
 coverage/
